@@ -17,12 +17,15 @@ object QueueRunner {
     doubleQueue.put(10)
     println("Pop first element: " + doubleQueue.get())
 
-    val filteringQueue = new BasicIntQueue with Filtering {
-      def filter(x: Int): Boolean = x > 0
-    }
+    val filteringQueue = new BasicIntQueue with Filtering with Positivity
     filteringQueue.put(-3)
     filteringQueue.put(2)
     println("First element is: " + filteringQueue.get())
+
+    val mixedQueue = new MixedQueue
+    mixedQueue.put(-2)
+    mixedQueue.put(3)
+    println("Values from mixed queue are: " + mixedQueue.get())
   }
 
   abstract class IntQueue {
@@ -32,6 +35,10 @@ object QueueRunner {
 
   trait Doubling extends IntQueue {
     abstract override def put(x:Int) {super.put(2*x)}
+  }
+
+  trait Positivity {
+    def filter(x:Int) : Boolean = x > 0
   }
 
   trait Incrementing extends IntQueue {
@@ -54,5 +61,9 @@ object QueueRunner {
   }
 
   class DoublingQueue extends BasicIntQueue with Doubling
+
+  class MixedQueue extends BasicIntQueue with Doubling with Incrementing with Filtering {
+    def filter(x: Int): Boolean = x > 0
+  }
 
 }
