@@ -28,42 +28,42 @@ object QueueRunner {
     println("Values from mixed queue are: " + mixedQueue.get())
   }
 
-  abstract class IntQueue {
-    def get() : Int
-    def put(x:Int)
+}
+
+abstract class IntQueue {
+  def get() : Int
+  def put(x:Int)
+}
+
+trait Doubling extends IntQueue {
+  abstract override def put(x:Int) {super.put(2*x)}
+}
+
+trait Positivity {
+  def filter(x:Int) : Boolean = x > 0
+}
+
+trait Incrementing extends IntQueue {
+  abstract override def put(x:Int) {super.put(x+1)}
+}
+
+trait Filtering extends IntQueue {
+  def filter(x:Int) : Boolean
+  abstract override def put(x:Int) {if (filter(x)) super.put(x)}
+}
+
+class BasicIntQueue extends IntQueue {
+  private val buf = new ArrayBuffer[Int]
+
+  def get(): Int = buf.remove(0)
+
+  def put(x:Int) {
+    buf += x
   }
+}
 
-  trait Doubling extends IntQueue {
-    abstract override def put(x:Int) {super.put(2*x)}
-  }
+class DoublingQueue extends BasicIntQueue with Doubling
 
-  trait Positivity {
-    def filter(x:Int) : Boolean = x > 0
-  }
-
-  trait Incrementing extends IntQueue {
-    abstract override def put(x:Int) {super.put(x+1)}
-  }
-
-  trait Filtering extends IntQueue {
-    def filter(x:Int) : Boolean
-    abstract override def put(x:Int) {if (filter(x)) super.put(x)}
-  }
-
-  class BasicIntQueue extends IntQueue {
-    private val buf = new ArrayBuffer[Int]
-
-    def get(): Int = buf.remove(0)
-
-    def put(x:Int) {
-      buf += x
-    }
-  }
-
-  class DoublingQueue extends BasicIntQueue with Doubling
-
-  class MixedQueue extends BasicIntQueue with Doubling with Incrementing with Filtering {
-    def filter(x: Int): Boolean = x > 0
-  }
-
+class MixedQueue extends BasicIntQueue with Doubling with Incrementing with Filtering {
+  def filter(x: Int): Boolean = x > 0
 }
