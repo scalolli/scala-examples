@@ -1,3 +1,5 @@
+package org.hashgeek
+
 /**
  * Created with IntelliJ IDEA.
  * User: basu
@@ -7,8 +9,6 @@
  */
 object Hello {
 
-  def main(args:Array[String]) {
-    println("Hello World")
-  }
+  val p = println(_ : Any)
 
 }

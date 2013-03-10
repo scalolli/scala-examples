@@ -1,5 +1,7 @@
 package org.hashgeek.lists
 
+import org.hashgeek.Hello._
+
 /**
  * Created with IntelliJ IDEA.
  * User: basu
@@ -9,7 +11,6 @@ package org.hashgeek.lists
 object ListsRunner {
 
   def main(args: Array[String]) {
-    val p = println(_ : Any)
     val l = List(1,2,3)
     val l2 = 1::2::3::Nil
     val List(a,b,c) = l
@@ -52,7 +53,6 @@ object ListsRunner {
 
     p((List(1,2,3), List(1,2)).zipped.map(_*_))
     val tup = ((List(1,2,3), List(1,2)).zipped)
-    tup.foreach(print)
   }
 
   def printRest(list:List[Int]) {
