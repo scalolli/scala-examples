@@ -20,8 +20,6 @@ object ImportRunner {
     mixQueue.put(5)
     displayQueue(mixQueue)
     println("Color of apple is: " + a.color)
-    val specialSub = new SpecialSubclass
-    specialSub.hello()
   }
 
   def displayQueue(q: MixedQueue) {
@@ -29,5 +27,4 @@ object ImportRunner {
     println("Getting value from q: " + get())
   }
 
-  class SpecialSubclass extends Special
 }
