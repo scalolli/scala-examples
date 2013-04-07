@@ -1,6 +1,7 @@
 package org.hashgeek.monads
 
 import org.hashgeek.Hello.p
+import org.specs2.internal.scalaz.std.OptionOrder
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,5 +42,22 @@ object MonadsRunner {
     p("m map g map f ≡ m flatMap {x => unit(f(g(x))} " + l.flatMap(x => unit(multiplyBy2(multiplyBy2(x)))))
     p(" m map g map f ≡ m map {x => f(g(x))} " + l.map(x => multiplyBy2(multiplyBy2(x))))
 
+    val list = List("India", "Japan", "France", "Russia")
+    val capitals = Map("India"->"New Delhi", "Japan"->"Tokyo")
+
+    p(list flatMap (i => capitals.get(i) map(j => j)))
+    p(list flatMap(((country:String) => capitals.get(country) map (y => y))))
+
+
+    val o = Some(Order(101))
+
   }
+
+  case class Order(value:Int)
+
+  def creditCheck(order : Order) : Option[Order] = Some(order)
+
+  def greaterThanCheck(order : Order) : Option[Order] = if (order.value > 100) Some(order) else None
+
+
 }

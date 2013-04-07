@@ -32,6 +32,29 @@ object ImplicitsRunner {
     javaPerson.fly()
 
     printPerson
+
+    print(Option(javaPerson.getName).get)
+
+
+    println(Some(Dev(Nil)) flatMap{
+       x => haskell(x) flatMap {
+        (y => linux(y) flatMap {
+          (z => scala(z) map {
+            java(_)
+          })
+        })
+      }
+    })
+//
+//    for {
+//        w <- Option(new SuperMan("basu", "2"))
+//        x <- haskell(w)
+//        y <- linux(x)
+//        z <- java(y)
+//    } yield z match {
+//      case z : SuperMan => "You are Awesome !!!"
+//      case _ => "Fail, get out of here !!!"
+//    }
   }
 
   class SuperMan(val name: String, id: String) {
@@ -47,6 +70,16 @@ object ImplicitsRunner {
   def printListOfPersons(l : List[SuperMan]) {
     l.foreach((p:SuperMan) => print(p.name))
   }
+
+  case class Dev(skills:List[String])
+
+  def haskell(p: Dev) : Option[Dev] = Some(Dev("Haskell" :: p.skills))
+
+  def scala(p: Dev) : Option[Dev] = Some(Dev("Scala" :: p.skills))
+
+  def linux(p: Dev) : Option[Dev] = Some(Dev("Linux" :: p.skills))
+
+  def java(p: Dev) : Dev = Dev("Java" :: p.skills)
 
 
 }

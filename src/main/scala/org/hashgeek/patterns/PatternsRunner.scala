@@ -8,6 +8,16 @@ package org.hashgeek.patterns
  */
 object PatternsRunner {
 
+  sealed abstract class FootballClub extends Club with Nameable
+
+  trait Club
+
+  trait Nameable {
+    def name:String
+  }
+
+
+
   def main(args: Array[String]) {
     val t1 = (1,2)
 
@@ -22,22 +32,14 @@ object PatternsRunner {
     println("Output when sent string: " + convertToString(s))
     println("Output when sent a map: " + convertToString(m))
 
-    trait Club
-
-    trait Nameable {
-      def name:String
-    }
-
-    sealed abstract class FootballClub extends Club with Nameable
-
-    case class Chelsea(name:String)
-    case class Arsenal(name:String)
-    case class ManChesterUnited(name:String)
+    case class Chelsea(name:String) extends FootballClub
+    case class Arsenal(name:String) extends FootballClub
+    case class ManChesterUnited(name:String) extends FootballClub
 
     val c = Chelsea("Lampard")
     val a = Arsenal("RVP")
 
-    def clubMvP(club:Any) : String = (club : @unchecked) match {
+    def clubMvP(club:FootballClub) : String = (club : @unchecked) match {
       case x:Chelsea => "I love this club !!"
       case y:Arsenal => "Passing game amazing"
     }
